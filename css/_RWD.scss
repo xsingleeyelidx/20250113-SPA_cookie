@@ -1,0 +1,120 @@
+@media screen and (max-width: 1399px) {
+    #s09{
+        video{
+            width: 600px;
+        }
+        dl{
+            dt{
+                padding: 0;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1199px) {
+    #s07, #s09{
+        video {
+            width: 900px;
+            position: relative !important;
+            transform: translate(-50%, 0) !important;
+            top: 0!important;
+            left: 50%!important;
+        }
+    }
+    #s09{
+        .container.container{
+            height: 1500px;
+        }
+    }
+}
+
+@media screen and (max-width: 991px) {
+    .s05_left{
+        margin: 0 auto;
+    }
+    #s07, #s09{
+        video {
+            width: 750px;
+        }
+    }
+}
+
+@media screen and (max-width: 767px) {
+    #s07,#s09 {
+        video {
+            width: 570px;
+        }
+    }
+    #s08 {
+        .container{
+            .row{
+                .col-xxl-6:nth-child(even){
+                    .d-flex {
+                        flex-direction : row;
+                    }
+                }
+            }
+        }
+        .heroPicBox{
+            margin: 0 auto;
+        }
+    }
+    #s09{
+        .container.container{
+            height: 100%;
+        }
+        dl.wow{
+            >dt{
+                font-size: 1.3em;
+            }
+            dl{
+                dt{
+                    text-align: end;
+                    padding-right: 0;
+                }
+            }
+        }
+        
+    }
+}
+
+@media screen and (max-width: 575px) {
+    #s05#s05{
+        .s05_left{
+            border-radius: 0;
+            padding-top: 1rem;
+        }
+        .timeline{
+            &::before {
+                right: 100%;
+                transform: translate(-50%);
+            }
+            .time-point{
+                &::after {
+                    top: -5%;
+                    right: 100%;
+                    transform: translate(100%);
+                }
+
+                &:first-child::after{
+                    top: 0;
+                }
+
+                .roller_box {
+                    margin-bottom: 1rem;
+                }
+            
+                .animate__bounceInLeft {
+                    padding-left: 2rem;
+                    padding-right: 2rem;
+                    border-radius: 50%;
+                }
+            } 
+        }
+    }
+    #s07,#s09 {
+        video {
+            width: 100vw;
+        }
+    }
+}

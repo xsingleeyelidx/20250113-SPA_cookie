@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Best Card Battle !</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"> <!-- animate -->
+    <link rel="stylesheet" href="./css/all.min.css" /> <!-- ICON -->
+    <link rel="stylesheet" href="./css/style.css" />
+    <style>
+        
+    </style>
+    <script src="js/wow.min.js"></script>
+    <script>
+        new WOW().init(); // 初始化 WOW
+    </script>
+</head>
+
+<body class="bg_cover">
+<div id="app">
+    <!-- Nav -->
+    <section id="s02" class="sticky-top">
+        <nav class="navbar navbar-expand-xl bg-dark navbar-dark">
+            <div class="container-fluid wow animate__backInDown" data-wow-duration="1s" data-wow-delay="0s" data-wow-iteration="1">
+                <a class="navbar-brand" href="javaScript:;"><i class="fa-solid fa-dragon fa-2x"></i></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">首頁</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#s04">暢銷熱榜</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#s05">立即加入</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#s06">年度殊榮</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#s07">宣傳影片</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#s08">經典英雄</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#s09">職業特色</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#s13">卡牌等級</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#s14">牌組規劃</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#s10">聯絡我們</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#s11">徵才資訊</a>
+                        </li>
+                    </ul>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#login" v-show="!user_login_data.content.Username">登入</button>
+                    <span class="text-light fs-3 me-1" v-show="user_login_data.content.Username">歡迎回來，{{ user_login_data.content.Username }}</span>
+                    <button type="button" class="btn btn-success" v-show="user_login_data.content.Username" @click="logout">登出</button>
+                </div>
+            </div>
+        </nav>
+    </section>
+    <!-- LoginModal -->
+    <div class="modal fade fs-5" id="login" tabindex="-1">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="">LOGIN</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="userName" class="form-label">帳號</label>
+                        <input type="text" v-model="username_login" class="form-control" :class="{'is-invalid' : !flag_username_login}" id="userName" name="userName" placeholder="請輸入帳號">
+                        <div class="invalid-feedback">欄位不得空白</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">密碼</label>
+                        <input type="password" v-model="password_login" class="form-control" :class="{'is-invalid' : !flag_password_login}" id="password" name="password" placeholder="請輸入密碼" @keyup.enter="login">
+                        <div class="invalid-feedback">欄位不得空白</div>
+                    </div>
+                    <div class="">
+                        還沒有註冊嗎?點選<span data-bs-toggle="modal" data-bs-target="#Register"
+                            class="text-success" style="cursor: Pointer;">這邊註冊</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" @click="login">確認</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- RegisterModal -->
+    <div class="modal fade fs-5" id="Register" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">LOGIN</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <ol>
+                                <li>會員在註冊時需提供真實資料，並確保帳戶資訊安全，避免未經授權使用。</li>
+                                <li>嚴禁使用作弊工具、漏洞或不當手段影響遊戲公平性，違者將遭永久封禁。</li>
+                                <li>會員應遵守遊戲內社交規範，尊重他人，避免任何形式的辱罵、歧視或騷擾行為。</li>
+                                <li>會員帳戶不得轉讓或共享，所有遊戲內活動需遵守遊戲規範，防止詐騙行為發生。</li>
+                            </ol>
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" v-model="flag_chk_reg" :class="{'is-valid' : flag_chk_reg, 'is-invalid' : !flag_chk_reg}" name="" id="">
+                                <label for="" class="form-check-label">{{ chk_reg_text }}</label>
+                                <div class="valid-feedback"></div>
+                                <div class="invalid-feedback">須同意才能註冊</div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="createUserName" class="form-label">會員帳號</label>
+                                <input type="text" class="form-control" v-model="username_reg" :class="{'is-valid' : flag_username_reg, 'is-invalid' : !flag_username_reg}" id="createUserName" name="createUserName" placeholder="帳號字數8~20字元">
+                                <div class="valid-feedback">帳號字數符合規定</div>
+                                <div class="invalid-feedback">帳號字數不符規定</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="createPassword" class="form-label">會員密碼</label>
+                                <input type="text" class="form-control" v-model="password_reg" :class="{'is-valid' : flag_password_reg, 'is-invalid' : !flag_password_reg}" id="createPassword" name="createPassword" placeholder="密碼字數8~20字元">
+                                <div class="valid-feedback">密碼字數符合規定</div>
+                                <div class="invalid-feedback">密碼字數不符規定</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="confirmPassword" class="form-label">確認密碼</label>
+                                <input type="text" class="form-control" v-model="rePassword_reg" :class="{'is-valid' : flag_rePassword_reg, 'is-invalid' : !flag_rePassword_reg}" id="confirmPassword" name="confirmPassword" placeholder="密碼確認">
+                                <div class="valid-feedback">密碼相同</div>
+                                <div class="invalid-feedback">密碼不相同</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="createEmail" class="form-label">會員信箱</label>
+                                <input type="email" class="form-control" v-model="email_reg" :class="{'is-valid' : flag_email_reg, 'is-invalid' : !flag_email_reg}" id="createEmail" name="createEmail" placeholder="信箱字數8~30字元">
+                                <div class="valid-feedback">字數符合規定</div>
+                                <div class="invalid-feedback">字數不符規定</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" @click="register" @keyup.enter="register">確認</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- carousel -->
+    <section id="s03">
+        <div id="carousel01" class="carousel slide" data-bs-ride="carousel">
+            <!-- picBtn -->
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carousel01" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carousel01" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carousel01" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#carousel01" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                <button type="button" data-bs-target="#carousel01" data-bs-slide-to="4" aria-label="Slide 5"></button>
+            </div>
+            <!-- pic -->
+            <div class="carousel-inner">
+                <div class="carousel-item bg_cover active vh-100" style="background-image: url(./images/default-4fff3c606c794dc03a915b9071f562d3.jpg);">
+                    <div class="carousel-caption d-none d-md-block rounded-3 shadow-lg p-3 fs-4" style="background-color: rgba(0, 0, 0, 0.3);">
+                        <h3>快進來旅店吧！</h3>
+                        <p>收起刀劍，拿出套牌，該來打《爐石戰記》了！在史詩級的策略交鋒中施展法術、召喚手下並指揮來自《魔獸世界》的各路英雄。</p>
+                    </div>
+                </div>
+                <div class="carousel-item bg_cover" style="height: 919px; background-image: url(./images/HS_28p6_PP_Mega_Phoenix_Franchise_ArtOnly_1920x1080_RN02.png);">
+                    <div class="carousel-caption d-none d-md-block rounded-3 shadow-lg p-3 fs-4" style="background-color: rgba(0, 0, 0, 0.3);">
+                        <h3>升空飛向《星外暗界》</h3>
+                        <p>《星外暗界》現已推出！包含壯觀的星艦、超乎想像的德萊尼等豐富內容！</p>
+                    </div>
+                </div>
+                <div class="carousel-item bg_cover" style="height: 919px; background-image: url(./images/playpickhero.avif);">
+                    <div class="carousel-caption d-none d-md-block rounded-3 shadow-lg p-3 fs-4" style="background-color: rgba(0, 0, 0, 0.2);">
+                        <h3>遊戲特色</h3>
+                        <p>無論你是遊戲高手或休閒玩家，都能在《爐石戰記》找到你最喜歡的玩法。</p>
+                    </div>
+                </div>
+                <div class="carousel-item bg_cover" style="height: 919px; background-image: url(./images/midgamecombat.webp);">
+                    <div class="carousel-caption d-none d-md-block rounded-3 shadow-lg p-3 fs-4" style="background-color: rgba(0, 0, 0, 0.3);">
+                        <h3>遊戲模式</h3>
+                        <p>《爐石戰記》不只有排名對戰，你也可以加入節奏快速、瞬息萬變的大亂鬥模式！</p>
+                    </div>
+                </div>
+                <div class="carousel-item bg_cover" style="height: 919px; background-image: url(./images/HS_31p0_GDB_TavernPass_PlayHS_Homepage_1920x1080_LZO01.jfif);">
+                    <div class="carousel-caption d-none d-md-block rounded-3 shadow-lg p-3 fs-4" style="background-color: rgba(0, 0, 0, 0.2);">
+                        <h3>大家都進來吧！</h3>
+                        <p>加入遊戲，開始施展法術、召喚強大的手下，粉碎你的敵人吧！《爐石戰記》上手容易，樂趣無窮！</p>
+                    </div>
+                </div>
+            </div>
+            <!-- L&R Btn -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#carousel01"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carousel01"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </section>
+    
+    <template v-if = "user_login_data.content.Level >= 0">
+    
+    <section id="s04">
+        <div class="divider bg_cover position-absolute top-0 w-100"></div>
+        <div class="row align-items-center">
+            <div class="col-lg-4 d-none d-lg-block bg_cover wow animate__slideInLeft" style="background-image: url(./images/JumpIn.avif); height: 600px; z-index: -1;" data-wow-duration="0.8s" data-wow-delay="0s" data-wow-iteration="1">
+            </div>
+            <div class="col-lg-8 text-light px-5">
+                <div class="p-4 ps-5 fs-4">
+                    <h1>簡單無比，樂趣無窮</h1>
+                    <h1>策略卡牌遊戲 • 免費暢玩</h1>
+                    <p>收起刀劍，拿出套牌，該來打《爐石戰記》了！</p>
+                    <p>在史詩級的策略交鋒中施展法術</p>
+                    <p>召喚手下並指揮來自《魔獸世界》的各路英雄。</p>
+                </div>
+                <div>
+                    <div class="row">
+                        <div class="col-xl-3 col-lg-6 col-md-3 col-6 p-0 counter_01 wow animate__zoomIn" data-wow-duration="0.5s" data-wow-delay="0s" data-wow-iteration="1">
+                            <h4>下載次數</h4>
+                            <h2>3500000+</h2>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-3 col-6 p-0 counter_02 wow animate__zoomIn" data-wow-duration="0.5s" data-wow-delay="0.5s" data-wow-iteration="1">
+                            <h4>同時在線人數</h4>
+                            <h2>100000+</h2>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-3 col-6 p-0 counter_03 wow animate__zoomIn" data-wow-duration="0.5s" data-wow-delay="1s" data-wow-iteration="1">
+                            <h4>更新活力</h4>
+                            <h3><span class="h2 fw-900">4</span>　次大改版 / 每年</h3>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-3 col-6 p-0 counter_04 wow animate__zoomIn" data-wow-duration="0.5s" data-wow-delay="1.5s" data-wow-iteration="1">
+                            <h4>最熱直播</h4>
+                            <h2>twitch<br>熱榜第一</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- timeline -->
+    <section id="s05" class="bg_cover py-5">
+        <div class="divider bg_cover position-absolute top-0 w-100"></div>
+        <div class="container col-lg-8 offset-lg-2">
+            <div class="row align-items-center">
+                <div class="col-lg-3 col-sm-8 s05_left me-auto wow animate__rollIn" data-wow-duration="1s" data-wow-delay="0s" data-wow-iteration="1">
+                    <h3>隨時隨地對戰體驗</h3>
+                    <p>無論你身在何處，隨時隨地都能享受激烈的卡牌對戰！《爐石戰記》支持跨平台遊玩，無論是在家、通勤途中或是休息時，只要有網絡，你就能隨時開啟一場精彩對決。與全球玩家比拼智慧、策略和反應，體驗無與倫比的卡牌戰鬥樂趣。不論是短暫的空閒時間還是長時間的策略規劃，隨時隨地，爐石之戰等你來挑戰！</p>
+                </div>
+                <div class="col-lg-8 s05-right">
+                    <div class="timeline">
+                        <div class="row align-items-end mt-3 time-point">
+                            <div class="col-sm-6">
+                                <div class="roller_box rounded-5 wow animate__bounceInRight" data-wow-duration="1s" data-wow-delay="0s" data-wow-iteration="1">
+                                    <div class="bg_cover" style="background-image: url(./images/CrossPlay.avif); height: 200px;"></div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="text-center wow animate__bounceInLeft" data-wow-duration="1.5s" data-wow-delay="0s" data-wow-iteration="1">
+                                    <h3>立即下載並啟動冒險</h3>
+                                    <p>開始你的爐石之旅！立即從官方平台下載《爐石戰記》，無論是PC還是移動設備，輕鬆安裝並啟動遊戲，開啟屬於你的卡牌世界冒險。</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row align-items-end mt-3 time-point">
+                            <div class="col-sm-6">
+                                <div class="roller_box rounded-5 wow animate__bounceInRight" data-wow-duration="1s" data-wow-delay="0s" data-wow-iteration="1">
+                                    <div class="bg_cover" style="background-image: url(./images/playpickhero.avif); height: 200px;"></div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="text-center wow animate__bounceInLeft" data-wow-duration="1.5s" data-wow-delay="0s" data-wow-iteration="1">
+                                    <h3>選擇你的英雄與卡組</h3>
+                                    <p>進入遊戲後，挑選一位具有獨特能力的英雄，並根據你的策略選擇卡牌。每位英雄都有不同的玩法風格，選擇最適合你的搭配，準備迎接激烈的對戰。</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row align-items-end mt-3 time-point">
+                            <div class="col-sm-6">
+                                <div class="roller_box rounded-5 wow animate__bounceInRight" data-wow-duration="1s" data-wow-delay="0s" data-wow-iteration="1">
+                                    <div class="bg_cover" style="background-image: url(./images/deckfilledin.avif); height: 200px;"></div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="text-center wow animate__bounceInLeft" data-wow-duration="1.5s" data-wow-delay="0s" data-wow-iteration="1">
+                                    <h3>參加戰鬥，挑戰對手</h3>
+                                    <p>準備好迎接全球玩家的挑戰！不論是單人闖關還是多人競技，帶著你的卡組出發，挑戰對手，爭奪勝利與豐厚的獎勳。每場戰鬥都充滿無限可能！</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row align-items-end mt-3 time-point">
+                            <div class="col-sm-6">
+                                <div class="roller_box rounded-5 wow animate__bounceInRight" data-wow-duration="1s" data-wow-delay="0s" data-wow-iteration="1">
+                                    <div class="bg_cover" style="background-image: url(./images/HS_31p0_GDB_TavernPass_PlayHS_Homepage_1920x1080_LZO01.jfif); height: 200px;"> </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="text-center wow animate__bounceInLeft" data-wow-duration="1.5s" data-wow-delay="0s" data-wow-iteration="1">
+                                    <h3>持續升級，成為大師</h3>
+                                    <p>每一次對戰後，根據結果調整你的卡組，升級卡牌並解鎖新內容。隨著經驗積累，你將逐漸成為爐石大師，挑戰更強的對手，享受卡牌策略的無限樂趣！</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="divider bg_cover position-absolute top-100 w-100"></div>
+    </section>
+    
+    <section id="s06" class="bg-black py-5">
+        <div class="divider bg_cover position-absolute top-0 w-100"></div>
+        <div class="container py-5">
+            <div class="row text-light d-flex">
+                <div class="col-md-4">
+                    <div class="text-center mb-3 wow animate__tada" data-wow-duration="0.5s" data-wow-delay="0.5s" data-wow-iteration="1">
+                        <i class="fa-solid fa-trophy fa-8x"></i>
+                    </div>
+                    <div class="wow animate__jackInTheBox" data-wow-duration="0.8s" data-wow-delay="0s" data-wow-iteration="1">
+                        <h3 class="text-center">年度殊榮，持續進步</h3>
+                        <p>《爐石戰記》自推出以來，屢獲遊戲界的多項殊榮，包括各大遊戲大獎和專業評價平台的高分評價。它在全球範圍內獲得了"最佳策略遊戲"、"最佳線上卡牌遊戲"等獎項，並多次入選"年度最佳遊戲"名單。這些獎項不僅彰顯了遊戲的設計與創新，還證明了其在全球玩家心中的地位與影響力，成為卡牌遊戲界的標杆之作。</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-center mb-3 wow animate__heartBeat" data-wow-duration="0.5s" data-wow-delay="1s" data-wow-iteration="1">
+                        <i class="fa-solid fa-gamepad fa-8x"></i>
+                    </div>
+                    <div class="wow animate__jackInTheBox" data-wow-duration="0.8s" data-wow-delay="0s" data-wow-iteration="1">
+                        <h3 class="text-center">策略多變，樂趣無窮</h3>
+                        <p>《爐石戰記》結合了卡牌策略和隨機元素，玩家需要根據對手的出牌策略及手牌情況作出應對，運用不同的卡組來迎接各種挑戰。每一場對戰都有無窮變化，隨著每張卡牌的發揮、運氣與技巧的結合，遊戲充滿驚喜。遊戲的回合制玩法既簡單又充滿深度，讓不同水平的玩家都能找到樂趣。</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-center mb-3 wow animate__rubberBand" data-wow-duration="0.5s" data-wow-delay="1.5s" data-wow-iteration="1">
+                        <i class="fa-solid fa-chess fa-8x"></i>
+                    </div>
+                    <div class="wow animate__jackInTheBox" data-wow-duration="0.8s" data-wow-delay="0s" data-wow-iteration="1">
+                        <h3 class="text-center">益智對奕，精彩刺激</h3>
+                        <p>《爐石戰記》不僅是一款卡牌遊戲，它同時也是一場益智挑戰。玩家需要運用策略、邏輯與預判，推演出對手可能的每一步行動，並作出最佳選擇。每場對局中，合理安排卡牌的使用順序、資源管理和風險控制，都是考驗玩家智慧的關鍵。這樣的思維鍛煉，不僅增進了玩家的策略能力，還能提升解決問題的技巧。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="s07" class="py-5">
+        <div class="divider bg_cover position-absolute top-0 w-100"></div>
+        <div class="row">
+            <div class="col-xl-5">
+                
+                <video src="https://blz-contentstack-assets.akamaized.net/v3/assets/bltc965041283bac56c/blt6a3c3c1611fe07f9/651df7f6e4a8aff634bd6daf/Hearth_Cine-HeroesOfWarcraft_MOS_enUS_HRZ.mp4" width="42%" class="position-absolute top-50 translate-middle-y mx-xl-3 rounded-1" autoplay muted loop>Video not supported</video>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-7 ms-auto">
+                    <div class="text-light fs-5 p-4">
+                        <h3 class="text-center wow animate__flipInX" data-wow-duration="1.5s" data-wow-delay="0s" data-wow-iteration="1">承襲經典 MMORPG <span class="fs-1 fw-900">魔獸世界</span> 世界觀</h3>
+                        <p class="wow animate__bounceInRight" data-wow-duration="0.6s" data-wow-delay="0s" data-wow-iteration="1">《爐石戰記》秉承了經典MMORPG《魔獸世界》的世界觀，帶領玩家進入艾澤拉斯的奇幻大陸。無論是人類的王國、精靈的森林，還是矮人與獸人的激烈對抗，這些熟悉的場景與種族，都在《爐石戰記》中的卡牌中栩栩如生。每一張卡牌都充滿了來自魔獸宇宙的魔法與傳奇，無論你是新手還是資深玩家，都能感受到這股強烈的魔獸情懷。</p>
+                        <p class="wow animate__bounceInRight" data-wow-duration="0.6s" data-wow-delay="0.6s" data-wow-iteration="1">《爐石戰記》為《魔獸世界》中的經典角色注入了全新生命。玩家可以在卡牌中找到像是阿薩斯、吉安娜、瑪法里奧等強大人物，他們的技能與故事背景都忠實呈現了原作中的風采。每一張卡牌都能讓你回憶起那段與這些英雄們共同奮戰的歲月，並帶領你重新體驗這些傳奇角色的力量與魅力。</p>
+                        <p class="wow animate__bounceInRight" data-wow-duration="0.6s" data-wow-delay="1.2s" data-wow-iteration="1">《爐石戰記》不僅僅是魔獸宇宙的延伸，它將魔獸世界中的各種元素進行創新融合，為卡牌遊戲帶來前所未有的策略深度。你將會在戰鬥中遇到魔獸的魔法、傳奇怪物和各式各樣的能力，而這些元素在遊戲規則與策略上進行了巧妙的設計，讓每場對戰都充滿變數與驚喜，挑戰玩家的智慧與反應。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Heroes -->
+    <section id="s08" class="bg_cover">
+        <div class="divider bg_cover position-absolute top-0 w-100"></div>
+        <div class="container">
+            <div class="display-2 fw-900 text-center py-5 d-flex justify-content-center">
+                <div class="wow animate__rollIn px-3" data-wow-duration="0.5s" data-wow-delay="0s" data-wow-iteration="1">英</div> 
+                <div class="wow animate__rollIn px-3" data-wow-duration="0.5s" data-wow-delay="0.5s" data-wow-iteration="1">雄</div> 
+                <div class="wow animate__rollIn px-3" data-wow-duration="0.5s" data-wow-delay="1s" data-wow-iteration="1">介</div> 
+                <div class="wow animate__rollIn px-3" data-wow-duration="0.5s" data-wow-delay="1.5s" data-wow-iteration="1">紹</div>
+            </div>
+            <div class="row">
+                <div class="col-xxl-6 offset-xxl-0 col-xl-10 offset-xl-1">
+                    <div class="row d-flex">
+                        <div class="col-md-4">
+                            <div id="hero_01" class="heroPicBox wow animate__flipInY" data-wow-duration="1.5s" data-wow-delay="0s" data-wow-iteration="1"></div>
+                        </div>
+                        <div class="col-md-8 d-flex flex-column justify-content-center p-5">
+                            <h3 class="mb-3 fs-3 wow animate__jackInTheBox" data-wow-duration="1.3s" data-wow-delay="0s" data-wow-iteration="1">死亡騎士：阿薩斯·米奈希爾<br><small>Arthas Menethil</small></h3>
+                            <p class="fs-5 wow animate__fadeIn" data-wow-duration="1s" data-wow-delay="1.5s" data-wow-iteration="1">阿薩斯是曾經的洛丹倫王子，最終成為天譴軍的領袖。他的墮落故事是《魔獸世界》最具悲劇性的篇章之一。阿薩斯的命運在獲得霜之哀傷之後發生劇變，成為死亡騎士並帶領天譴軍席捲整個艾澤拉斯。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-6 offset-xxl-0 col-xl-10 offset-xl-1">
+                    <div class="row d-flex">
+                        <div class="col-md-4">
+                            <div id="hero_02" class="heroPicBox wow animate__flipInY" data-wow-duration="1.5s" data-wow-delay="0s" data-wow-iteration="1"></div>
+                        </div>
+                        <div class="col-md-8 d-flex flex-column justify-content-center p-5">
+                            <h3 class="mb-3 fs-3 wow animate__jackInTheBox" data-wow-duration="1.3s" data-wow-delay="0s" data-wow-iteration="1">法師：珍娜·普羅德摩爾<br><small>Jaina Proudmoore</small></h3>
+                            <p class="fs-5 wow animate__fadeIn" data-wow-duration="1s" data-wow-delay="1.5s" data-wow-iteration="1">珍娜是艾澤拉斯最偉大的法師之一，曾是庫爾提拉斯的王國領袖。她精通冰霜與火焰魔法，並在多次決定世界命運的戰爭中扮演關鍵角色。珍娜的智慧與領袖能力令她成為重要的盟友與戰爭指揮官，但她的內心也充滿了困惑與痛苦。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-6 offset-xxl-0 col-xl-10 offset-xl-1">
+                    <div class="row d-flex">
+                        <div class="col-md-4">
+                            <div id="hero_03" class="heroPicBox wow animate__flipInY" data-wow-duration="1.5s" data-wow-delay="0s" data-wow-iteration="1"></div>
+                        </div>
+                        <div class="col-md-8 d-flex flex-column justify-content-center p-5">
+                            <h3 class="mb-3 fs-3 wow animate__jackInTheBox" data-wow-duration="1.3s" data-wow-delay="0s" data-wow-iteration="1">惡魔獵人：伊利丹·怒風<br><small>Illidan Stormrage</small></h3>
+                            <p class="fs-5 wow animate__fadeIn" data-wow-duration="1s" data-wow-delay="1.5s" data-wow-iteration="1">伊利丹是惡魔獵人的創始人之一，曾為一名德魯伊，但因為對力量的渴望而墮入黑暗。作為惡魔獵人，他放棄了自己的雙眼，換取了與惡魔力量的契約，並用這股力量來對抗惡魔入侵。他的故事充滿了爭議與矛盾。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-6 offset-xxl-0 col-xl-10 offset-xl-1">
+                    <div class="row d-flex">
+                        <div class="col-md-4">
+                            <div id="hero_04" class="heroPicBox wow animate__flipInY" data-wow-duration="1.5s" data-wow-delay="0s" data-wow-iteration="1"></div>
+                        </div>
+                        <div class="col-md-8 d-flex flex-column justify-content-center p-5">
+                            <h3 class="mb-3 fs-3 wow animate__jackInTheBox" data-wow-duration="1.3s" data-wow-delay="0s" data-wow-iteration="1">德魯伊：瑪法里奧·怒風<br><small>Malfurion Stormrage</small></h3>
+                            <p class="fs-5 wow animate__fadeIn" data-wow-duration="1s" data-wow-delay="1.5s" data-wow-iteration="1">瑪法里奧是艾澤拉斯最偉大的德魯伊之一，與自然界有著深厚的聯繫。他是德魯伊的創始人之一，曾經帶領部隊對抗燃燒軍團，並與他的妻子泰蘭德共同保護著世界。他的精神和力量是所有德魯伊的榜樣，並且是抵抗黑暗力量的重要力量之一。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-6 offset-xxl-0 col-xl-10 offset-xl-1">
+                    <div class="row d-flex">
+                        <div class="col-md-4">
+                            <div id="hero_05" class="heroPicBox wow animate__flipInY" data-wow-duration="1.5s" data-wow-delay="0s" data-wow-iteration="1"></div>
+                        </div>
+                        <div class="col-md-8 d-flex flex-column justify-content-center p-5">
+                            <h3 class="mb-3 fs-3 wow animate__jackInTheBox" data-wow-duration="1.3s" data-wow-delay="0s" data-wow-iteration="1">戰士：卡爾洛斯·地獄吼<br><small>Garrosh Hellscream</small></h3>
+                            <p class="fs-5 wow animate__fadeIn" data-wow-duration="1s" data-wow-delay="1.5s" data-wow-iteration="1">卡爾洛斯·地獄吼是部落的前任大酋長，出身於強大的地獄吼家族。以無情的戰爭策略與無畏的勇氣著稱，他無論在戰場上還是政治鬥爭中，都展現了極高的殘忍與決心。地獄吼的領導風格充滿力量，卻也因過於激進而最終走向了毀滅。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-6 offset-xxl-0 col-xl-10 offset-xl-1">
+                    <div class="row d-flex">
+                        <div class="col-md-4">
+                            <div id="hero_06" class="heroPicBox wow animate__flipInY" data-wow-duration="1.5s" data-wow-delay="0s" data-wow-iteration="1"></div>
+                        </div>
+                        <div class="col-md-8 d-flex flex-column justify-content-center p-5">
+                            <h3 class="mb-3 fs-3 wow animate__jackInTheBox" data-wow-duration="1.3s" data-wow-delay="0s" data-wow-iteration="1">術士：古爾丹<br><small>Gul'dan</small></h3>
+                            <p class="fs-5 wow animate__fadeIn" data-wow-duration="1s" data-wow-delay="1.5s" data-wow-iteration="1">古爾丹是綠色血脈的代表，也是黑暗術士的創始人之一。他是毀滅與腐化的象徵，對魔法的無盡渴望將他引入黑暗與邪惡的道路。他曾是部落的術士大師，並策劃了引入惡魔力量的陰謀，最終將自己與邪惡的力量綁定。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-6 offset-xxl-0 col-xl-10 offset-xl-1">
+                    <div class="row d-flex">
+                        <div class="col-md-4">
+                            <div id="hero_07" class="heroPicBox wow animate__flipInY" data-wow-duration="1.5s" data-wow-delay="0s" data-wow-iteration="1"></div>
+                        </div>
+                        <div class="col-md-8 d-flex flex-column justify-content-center p-5">
+                            <h3 class="mb-3 fs-3 wow animate__jackInTheBox" data-wow-duration="1.3s" data-wow-delay="0s" data-wow-iteration="1">獵人：雷克薩<br><small>Rexxar</small></h3>
+                            <p class="fs-5 wow animate__fadeIn" data-wow-duration="1s" data-wow-delay="1.5s" data-wow-iteration="1">雷克薩是半獸人獵人，與獸類和自然界有著深厚的聯繫。他身為混血的戰士與獵人，擅長與動物合作、追蹤和狩獵。雷克薩為保護艾澤拉斯的野生動物和原住民而奮鬥，他的獨特技能和戰鬥風格使他成為了人們敬仰的英雄。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-6 offset-xxl-0 col-xl-10 offset-xl-1">
+                    <div class="row d-flex">
+                        <div class="col-md-4">
+                            <div id="hero_08" class="heroPicBox wow animate__flipInY" data-wow-duration="1.5s" data-wow-delay="0s" data-wow-iteration="1"></div>
+                        </div>
+                        <div class="col-md-8 d-flex flex-column justify-content-center p-5">
+                            <h3 class="mb-3 fs-3 wow animate__jackInTheBox" data-wow-duration="1.3s" data-wow-delay="0s" data-wow-iteration="1">薩滿：索爾<br><small>Thrall</small></h3>
+                            <p class="fs-5 wow animate__fadeIn" data-wow-duration="1s" data-wow-delay="1.5s" data-wow-iteration="1">索爾是部落的英雄，曾經是被囚禁的奴隸，但最終成為部落的大酋長。他是伊利丹和古爾丹之後最強大的薩滿之一，擁有強大的元素力量並致力於將部落帶入一條更加正義與和平的道路。他的領導風格充滿智慧與同理心。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-6 offset-xxl-0 col-xl-10 offset-xl-1">
+                    <div class="row d-flex">
+                        <div class="col-md-4">
+                            <div id="hero_09" class="heroPicBox wow animate__flipInY" data-wow-duration="1.5s" data-wow-delay="0s" data-wow-iteration="1"></div>
+                        </div>
+                        <div class="col-md-8 d-flex flex-column justify-content-center p-5">
+                            <h3 class="mb-3 fs-3 wow animate__jackInTheBox" data-wow-duration="1.3s" data-wow-delay="0s" data-wow-iteration="1">牧師：安度因·烏瑞恩<br><small>Anduin Wrynn</small></h3>
+                            <p class="fs-5 wow animate__fadeIn" data-wow-duration="1s" data-wow-delay="1.5s" data-wow-iteration="1">安度因是暴風城的王子，擁有強大的精神力量和仁愛的心。他是一位勇敢的牧師，信仰著聖光並致力於幫助他人。儘管身為王子，他面對多重政治壓力，始終堅持對和平與公正的追求。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-6 offset-xxl-0 col-xl-10 offset-xl-1">
+                    <div class="row d-flex">
+                        <div class="col-md-4">
+                            <div id="hero_10" class="heroPicBox wow animate__flipInY" data-wow-duration="1.5s" data-wow-delay="0s" data-wow-iteration="1"></div>
+                        </div>
+                        <div class="col-md-8 d-flex flex-column justify-content-center p-5">
+                            <h3 class="mb-3 fs-3 wow animate__jackInTheBox" data-wow-duration="1.3s" data-wow-delay="0s" data-wow-iteration="1">聖騎士：烏瑟·光明使者<br><small>Uther the Lightbringer</small></h3>
+                            <p class="fs-5 wow animate__fadeIn" data-wow-duration="1s" data-wow-delay="1.5s" data-wow-iteration="1">烏瑟是聖光的化身之一，曾是洛丹倫王國的英雄，並成為聖騎士的創始人之一。他的精神與信念深深影響了整個艾澤拉斯，並且是阿薩斯的師父。烏瑟的無畏與仁愛讓他成為聖光的象徵，並在多次戰爭中指引著其他聖騎士。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-6 offset-xxl-0 col-xl-10 offset-xl-1">
+                    <div class="row d-flex">
+                        <div class="col-md-4">
+                            <div id="hero_11" class="heroPicBox wow animate__flipInY" data-wow-duration="1.5s" data-wow-delay="0s" data-wow-iteration="1"></div>
+                        </div>
+                        <div class="col-md-8 d-flex flex-column justify-content-center p-5">
+                            <h3 class="mb-3 fs-3 wow animate__jackInTheBox" data-wow-duration="1.3s" data-wow-delay="0s" data-wow-iteration="1">盜賊：瓦麗拉<br><small>Valeera Sanguinar</small></h3>
+                            <p class="fs-5 wow animate__fadeIn" data-wow-duration="1s" data-wow-delay="1.5s" data-wow-iteration="1">瓦麗拉是一名來自血精靈的盜賊，她是一位技藝高超的刺客，擅長隱匿與致命一擊。她的故事充滿了背叛與復仇，在艾澤拉斯的政治陰謀中，瓦麗拉總是游走於光明與黑暗之間，並以鋭利的心智與冷血的手段達成目標。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="divider bg_cover position-absolute top-100 w-100"></div>
+    </section>
+    
+    <!-- Build & feature -->
+    <section id="s09" class="py-5 text-light">
+        <div class="divider bg_cover position-absolute top-0 w-100"></div>
+        <div class="row">
+            <div class="col-xl-5">
+                <video src="https://blz-contentstack-assets.akamaized.net/v3/assets/bltc965041283bac56c/blt9dd4e100f0fc6e7b/651c751234451192dc8aca6a/Hearth_HomepageRedesign_DeckFilledIn_HRZ.mp4" width="700px" class="position-absolute top-50 end-0 translate-middle-y mx-xl-3 rounded-1" autoplay muted loop>Video not supported</video>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row fs-5">
+                <div class="col-xl-6">
+                    <h3 class="text-center wow animate__fadeInUp" data-wow-duration="0.7s" data-wow-delay="0.5s" data-wow-iteration="1"><span class="fs-1 fw-900">職業特色</span> 介紹</h3>
+                    <h4 class="wow animate__fadeInUp" data-wow-duration="0.7s" data-wow-delay="0.5s" data-wow-iteration="1">建構屬於你的強力套牌！</h4>
+                    <ul class="wow animate__fadeInUp" data-wow-duration="0.7s" data-wow-delay="0.5s" data-wow-iteration="1">
+                        <li>優勢：這些是該職業專精和擅長的事情。</li>
+                        <li>限制：這些是該職業可能會出現個幾次的特性，但它們的強度和卡牌數量非常有限。</li>
+                        <li>弱點：這些是該職業缺乏、或是很難有效達成的特點。</li>
+                    </ul>
+                    <dl class="row wow animate__fadeInUp" data-wow-duration="1.3s" data-wow-delay="0s" data-wow-iteration="1">
+                        <dt class="col-md-2 job">死亡騎士</dt>
+                        <dd class="col-md-10">
+                            <dl class="row">
+                                <dt class="col-2">優勢：</dt>
+                                <dd class="col-10">符文、死靈法術、大量手下</dd>
+                                <dt class="col-2">限制：</dt>
+                                <dd class="col-10">武器、治療</dd>
+                                <dt class="col-2">弱點：</dt>
+                                <dd class="col-10">派系構築限制，較具挑戰性</dd>
+                            </dl>
+                        </dd>
+                        <dt class="col-md-2 job">法師</dt>
+                        <dd class="col-md-10">
+                            <dl class="row">
+                                <dt class="col-2">優勢：</dt>
+                                <dd class="col-10">各式法術、傷害法術、秘密、清場、隨機生成能力</dd>
+                                <dt class="col-2">限制：</dt>
+                                <dd class="col-10">大量手下</dd>
+                                <dt class="col-2">弱點：</dt>
+                                <dd class="col-10">治療、嘲諷、手下強化</dd>
+                            </dl>
+                        </dd>
+                        <dt class="col-md-2 job">惡魔獵人</dt>
+                        <dd class="col-md-10">
+                            <dl class="row">
+                                <dt class="col-2">優勢：</dt>
+                                <dd class="col-10">抽牌、大型惡魔、大量手下</dd>
+                                <dt class="col-2">限制：</dt>
+                                <dd class="col-10">武器、治療</dd>
+                                <dt class="col-2">弱點：</dt>
+                                <dd class="col-10">摧毀大型手下、卡牌生成</dd>
+                            </dl>
+                        </dd>
+                        <dt class="col-md-2 job">德魯伊</dt>
+                        <dd class="col-md-10">
+                            <dl class="row">
+                                <dt class="col-2">優勢：</dt>
+                                <dd class="col-10">法力生成、巨大手下、大量手下</dd>
+                                <dt class="col-2">限制：</dt>
+                                <dd class="col-10">抽牌、野獸</dd>
+                                <dt class="col-2">弱點：</dt>
+                                <dd class="col-10">摧毀大型手下、清場</dd>
+                            </dl>
+                        </dd>
+                        <dt class="col-md-2 job">戰士</dt>
+                        <dd class="col-md-10">
+                            <dl class="row">
+                                <dt class="col-2">優勢：</dt>
+                                <dd class="col-10">護甲、武器、嘲諷、摧毀手下</dd>
+                                <dt class="col-2">限制：</dt>
+                                <dd class="col-10">抽牌和生成能力</dd>
+                                <dt class="col-2">弱點：</dt>
+                                <dd class="col-10">打臉法術、多手下強化、大量手下</dd>
+                            </dl>
+                        </dd>
+                        <dt class="col-md-2 job">術士</dt>
+                        <dd class="col-md-10">
+                            <dl class="row">
+                                <dt class="col-2">優勢：</dt>
+                                <dd class="col-10">犧牲換來的強大效果、抽牌、大量手下、惡魔</dd>
+                                <dt class="col-2">限制：</dt>
+                                <dd class="col-10">干擾能力、巨大手下</dd>
+                                <dt class="col-2">弱點：</dt>
+                                <dd class="col-10">打臉法術、大型治療術</dd>
+                            </dl>
+                        </dd>
+                        <dt class="col-md-2 job">獵人</dt>
+                        <dd class="col-md-10">
+                            <dl class="row">
+                                <dt class="col-2">優勢：</dt>
+                                <dd class="col-10">野獸、打臉、秘密、死亡之聲</dd>
+                                <dt class="col-2">限制：</dt>
+                                <dd class="col-10">抽牌和生成卡牌、清場、嘲諷</dd>
+                                <dt class="col-2">弱點：</dt>
+                                <dd class="col-10">治療</dd>
+                            </dl>
+                        </dd>
+                        <dt class="col-md-2 job">薩滿</dt>
+                        <dd class="col-md-10">
+                            <dl class="row">
+                                <dt class="col-2">優勢：</dt>
+                                <dd class="col-10">大量手下、傷害法術、圖騰、元素、魚人</dd>
+                                <dt class="col-2">限制：</dt>
+                                <dd class="col-10">武器、手下強化</dd>
+                                <dt class="col-2">弱點：</dt>
+                                <dd class="col-10">抽卡、卡牌生成</dd>
+                            </dl>
+                        </dd>
+                        <dt class="col-md-2 job">牧師</dt>
+                        <dd class="col-md-10">
+                            <dl class="row">
+                                <dt class="col-2">優勢：</dt>
+                                <dd class="col-10">治療、目標狹窄但強大的法術、複製、單一手下強化、死亡之聲</dd>
+                                <dt class="col-2">限制：</dt>
+                                <dd class="col-10">抽牌</dd>
+                                <dt class="col-2">弱點：</dt>
+                                <dd class="col-10">打臉法術、多手下強化</dd>
+                            </dl>
+                        </dd>
+                        <dt class="col-md-2 job">聖騎士</dt>
+                        <dd class="col-md-10">
+                            <dl class="row">
+                                <dt class="col-2">優勢：</dt>
+                                <dd class="col-10">大量手下、手下強化及弱化、治療、聖盾術、秘密</dd>
+                                <dt class="col-2">限制：</dt>
+                                <dd class="col-10">降低消耗</dd>
+                                <dt class="col-2">弱點：</dt>
+                                <dd class="col-10">直接傷害法術、摧毀大型手下</dd>
+                            </dl>
+                        </dd>
+                        <dt class="col-md-2 job">盜賊</dt>
+                        <dd class="col-md-10">
+                            <dl class="row">
+                                <dt class="col-2">優勢：</dt>
+                                <dd class="col-10">連擊卡牌、摧毀個別手下、抽牌</dd>
+                                <dt class="col-2">限制：</dt>
+                                <dd class="col-10">武器、死亡之聲</dd>
+                                <dt class="col-2">弱點：</dt>
+                                <dd class="col-10">嘲諷、治療、清場、多手下強化</dd>
+                            </dl>
+                        </dd>
+                    </dl>
+                    <h4>中立：</h4>
+                    <p>中性卡牌讓各職業能夠進一步利用他們的優勢，讓他們能用套牌來達成特定的目標，或是彌補一些弱點。舉例來說，聖騎士可以使用中立魚人，來讓他們的套牌更完整；或是獵人會選用擁有少量治療能力的中立卡牌，讓他們能在戰鬥中活久一點。這些卡牌的強度通常較低，讓各個職業永遠無法完全克服他們的弱點。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Card rarity -->
+    <section id="s13" class=" bg-black text-light">
+        <div class="divider bg_cover position-absolute top-0 w-100"></div>
+        <div class="container-fluid">
+            <div class="container wow animate__bounceInDown" data-wow-duration="0.7s" data-wow-delay="0.5s" data-wow-iteration="1">
+                <h3 class="fs-1 my-5">探索《爐石戰記》的卡牌稀有度系統，讓你在戰場上脫穎而出！</h3>
+                <p class="fs-4">在《爐石戰記》中，每張卡牌都有其獨特的稀有度，這不僅代表了卡牌的稀缺性，更直接影響你的遊戲策略與收藏之路。</p>
+                <p class="fs-4">從最基本的免費卡到強大無比的傳奇卡，每一張卡牌都擁有不同的遊戲價值和效果。</p>
+                <p class="fs-4">了解這些稀有度，幫助你更精確地構建你的牌組，並在對戰中獲得致勝的優勢！</p>
+            </div>
+            <div id="carousel02" class="carousel slide" data-bs-ride="false">
+                <!-- picBtn -->
+                <div class="carousel-indicators d-none d-xxl-flex">
+                    <button type="button" data-bs-target="#carousel02" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carousel02" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carousel02" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    <button type="button" data-bs-target="#carousel02" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                    <button type="button" data-bs-target="#carousel02" data-bs-slide-to="4" aria-label="Slide 5"></button>
+                </div>
+                <!-- pic -->
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="row d-flex align-items-center">
+                            <div class="col-xxl-2 offset-xxl-2">
+                                <div class="d-flex align-items-center">
+                                    <div class="card-container">
+                                        <div class="cards">
+                                            <div class="card card01"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="offset-xxl-1 col-md-6 offset-md-3">
+                                <h3 class="display-5 text-center">傳奇卡 Legendary</h3>
+                                <h3 class="fs-2 text-center my-3">獨一無二，改變遊戲規則！</h3>
+                                <p class="fs-4">傳奇卡是《爐石戰記》中的最頂級卡牌，擁有橙色寶石標識，並且其效果堪稱無與倫比！每副牌中僅能擁有一張傳奇卡，它們代表了遊戲中的傳奇人物與強大能力。擁有傳奇卡，不僅能改變整場比賽的格局，還能讓你的卡組具備無可比擬的優勢。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="row d-flex align-items-center">
+                            <div class="col-xxl-2 offset-xxl-2">
+                                <div class="d-flex align-items-center">
+                                    <div class="card-container">
+                                        <div class="cards">
+                                            <div class="card card02"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="offset-xxl-1 col-md-6 offset-md-3">
+                                <h3 class="display-5 text-center">史詩卡 Epic</h3>
+                                <h3 class="fs-2 text-center my-3">給你無與倫比的強力效果！</h3>
+                                <p class="fs-4">史詩卡是最強大、最具破壞力的卡牌之一。這些卡片擁有紫色寶石標識，並且在卡包中極為稀有。史詩卡的強大效果使得它們在牌組中能夠發揮決定性作用，尤其在高級對戰中，擁有幾張史詩卡將讓你真正站上巔峰！</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="row d-flex align-items-center">
+                            <div class="col-xxl-2 offset-xxl-2">
+                                <div class="d-flex align-items-center">
+                                    <div class="card-container">
+                                        <div class="cards">
+                                            <div class="card card03"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="offset-xxl-1 col-md-6 offset-md-3">
+                                <h3 class="display-5 text-center">稀有卡 Rare</h3>
+                                <h3 class="fs-2 text-center my-3">提升實力，開創新局！</h3>
+                                <p class="fs-4">稀有卡是稍微難以獲得，但卻能帶來大幅增強的卡片。這些卡片擁有藍色寶石標識，並且通常會給你的牌組注入更多戰術選擇，讓你在對戰中更加靈活。它們的效果可以扭轉戰局，是高效卡組不可或缺的成員！</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="row d-flex align-items-center">
+                            <div class="col-xxl-2 offset-xxl-2">
+                                <div class="d-flex align-items-center">
+                                    <div class="card-container">
+                                        <div class="cards">
+                                            <div class="card card04"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="offset-xxl-1 col-md-6 offset-md-3">
+                                <h3 class="display-5 text-center">普通卡 Common</h3>
+                                <h3 class="fs-2 text-center my-3">無處不在，實用之選！</h3>
+                                <p class="fs-4">普通卡是你在《爐石戰記》中最常見的卡牌。這些卡片擁有白色寶石標識，並且非常容易從卡包中獲得。它們在各種卡組中都能找到一席之地，為你的牌組提供強大的支援。無論是在新手戰鬥還是競技場中，普通卡都是你可靠的戰友！</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="row d-flex align-items-center">
+                            <div class="col-xxl-2 offset-xxl-2">
+                                <div class="d-flex align-items-center">
+                                    <div class="card-container">
+                                        <div class="cards">
+                                            <div class="card card05"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="offset-xxl-1 col-md-6 offset-md-3">
+                                <h3 class="display-5 text-center">基本卡 Free</h3>
+                                <h3 class="fs-2 text-center my-3">零成本，輕鬆擁有！</h3>
+                                <p class="fs-4">免費卡是《爐石戰記》中最基礎的卡牌。這些卡片不需要奧術之塵來製作，並且是每位玩家在遊戲初期的必備選擇。它們是構建你第一副強力牌組的基礎，無論是新手還是老玩家，都能夠快速開啟冒險。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- L&R Btn -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#carousel02"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carousel02"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+            <div class="container wow animate__fadeInUp" data-wow-duration="0.7s" data-wow-delay="0.5s" data-wow-iteration="1">
+                <h3 class="fs-1 my-3">掌握稀有度，開啟你的卡牌之旅！</h3>
+                <p class="fs-4">不管你是剛踏入《爐石戰記》的新手，還是已經在遊戲中厲兵秣馬的高手，了解卡牌稀有度將幫助你在遊戲中取得關鍵優勢！</p>
+                <p class="fs-4">準備好，挑戰自我，探索卡牌世界，構建你的最強牌組，並征服每一場對決！</p>
+                <p class="fs-1 text-center my-5 py-3">立即登入《爐石戰記》，開始你的冒險吧！</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- meta deck -->
+    <section id="s14" class="py-3 bg_cover">
+        <div class="divider bg_cover position-absolute top-0 w-100"></div>
+        <div class="container">
+            <div class="row pt-3">
+                <div class="col-xl-6 my-auto">
+                    <h3 class="display-5 text-center mb-5 wow animate__fadeInDown" data-wow-duration="0.7s" data-wow-delay="0s" data-wow-iteration="1">打造你專屬的強力牌組！</h3>
+                    <p class="fs-4 wow animate__bounceInLeft" data-wow-duration="0.6s" data-wow-delay="0s" data-wow-iteration="1">《爐石戰記》是一款充滿策略與創意的卡牌遊戲，每一張卡牌都能帶來無限的可能性。在這個充滿挑戰的戰場上，牌組的構築至關重要，直接決定了你的勝負走向！</p>
+
+                    <p class="fs-4 my-4 wow animate__bounceInLeft" data-wow-duration="0.6s" data-wow-delay="0.6s" data-wow-iteration="1">打造一副強大的牌組，既需要深刻理解每張卡牌的特性，也需要精確調整卡牌之間的搭配。無論是偏重攻擊的快攻牌組，還是以控制為主的防守牌組，抑或是融合創意與意外驚喜的奇招牌組，都能在這裡找到屬於自己的風格！</p>
+
+                    <p class="fs-4 wow animate__bounceInLeft" data-wow-duration="0.6s" data-wow-delay="1.2s" data-wow-iteration="1">每次對戰，都是一次智慧與技巧的較量。選擇合適的英雄、搭配互補的卡牌、巧妙運用卡牌效果，能在關鍵時刻翻盤，讓對手措手不及。無論你是新手還是老手，《爐石戰記》的牌組構築都能為你帶來無窮的樂趣和挑戰，打造專屬於你的傳奇卡牌之路！</p>
+                </div>
+                <div class="col-xl-6">
+                    <div class="d-flex align-items-center wow animate__rotateIn" data-wow-duration="0.7s" data-wow-delay="0.5s" data-wow-iteration="1">
+                        <i class="fa-solid fa-caret-left fa-2x"></i>
+                        <div class="deck-container">
+                            <div id="deck01" class="deck"></div>
+                            <div id="deck02" class="deck"></div>
+                            <div id="deck03" class="deck"></div>
+                            <div id="deck04" class="deck"></div>
+                            <div id="deck05" class="deck"></div>
+                            <div id="deck06" class="deck"></div>
+                            <div id="deck07" class="deck"></div>
+                            <div id="deck08" class="deck"></div>
+                            <div id="deck09" class="deck"></div>
+                            <div id="deck10" class="deck"></div>
+                            <div id="deck11" class="deck"></div>
+                        </div>
+                        <i class="fa-solid fa-caret-right fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map & form -->
+    <section id="s10" class="py-5">
+        <div class="divider bg_cover position-absolute top-0 w-100"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5 me-auto wow animate__backInLeft" data-wow-duration="1s" data-wow-delay="0s" data-wow-iteration="1">
+                    <iframe class=" rounded-3" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3614.451658131861!2d121.60438937503828!3d25.052676437539915!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442ab0079603007%3A0x49c8f5544699db97!2z6aaZ5riv5ZWG5YuV6KaW5pq06Zuq5pyJ6ZmQ5YWs5Y-45Y-w54Gj5YiG5YWs5Y-4!5e0!3m2!1szh-TW!2stw!4v1733274201093!5m2!1szh-TW!2stw" width="100%" height="500" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+                <div class="col-md-6 wow animate__backInRight" data-wow-duration="1s" data-wow-delay="0s" data-wow-iteration="1">
+                    <form method="" action="">
+                        <h3 class="mb-4 text-center fs-1 fw-900 text-light">聯絡我們</h3>
+                        <div class="mb-4 form-floating">
+                            <input type="text" class="form-control" placeholder="">
+                            <label for="" class="form-label">您的大名</label>
+                        </div>
+                        <div class="mb-4 form-floating">
+                            <input type="text" class="form-control" placeholder="">
+                            <label for="" class="form-label">連絡電話</label>
+                        </div>
+                        <div class="mb-4 form-floating">
+                            <input type="text" class="form-control" placeholder="">
+                            <label for="" class="form-label">聯絡電郵</label>
+                        </div>
+                        <div class="mb-3 form-floating">
+                            <textarea class="form-control" placeholder=""></textarea>
+                            <label for="" class="form-label">有話想說</label>
+                        </div>
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-success">送出</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- recruit -->
+    <section id="s11" class="bg-black py-3">
+        <div class="divider bg_cover position-absolute top-0 w-100"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 d-flex align-items-center">
+                    <div class="row">
+                        <div class="col-lg-6 bg-secondary py-3 border rounded-3 ms-auto me-1 text-light wow animate__lightSpeedInLeft" data-wow-duration="0.6s" data-wow-delay="0s" data-wow-iteration="1">
+                            <small class="badge text-bg-danger">加入我們</small>
+                            <h3 class="my-3">客服人員</h3>
+                            <p>我們在尋找具備優秀溝通能力的客服人員，能清晰解釋公司產品與服務，並有效解決客戶問題。具備耐心與同理心，理解並滿足客戶需求，提供專業服務。此外需良好的問題分析與應變能力，能迅速處理突發狀況，並熟悉公司產品知識，解答客戶疑問。基本的電腦操作能力，需熟練運用客服平台（如電話、電子郵件、即時聊天等）。若您符合需求，歡迎加入我們的團隊！</p>
+                            <a href="#" role="button" class="btn btn-primary">前往了解</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 d-flex align-items-center">
+                    <div class="row">
+                        <div class="col-lg-6 bg-secondary py-3 border rounded-3 text-light wow animate__lightSpeedInRight" data-wow-duration="0.6s" data-wow-delay="0s" data-wow-iteration="1">
+                            <small class="badge text-bg-danger">加入我們</small>
+                            <h3 class="my-3">活動企劃</h3>
+                            <p>需要具備創意思維和執行力的活動企劃人員，負責規劃設計並執行各類活動。應具備良好的溝通協調能力，與團隊及合作夥伴緊密合作，確保活動順利進行。能夠根據目標受眾設計吸引人的活動方案。良好的時間管理與專案管理能力，能在預算內按時完成任務。對活動相關軟體工具的熟悉操作以及應對突發狀況的能力也是加分條件。若您具備這些專長，歡迎加入團隊！</p>
+                            <a href="#" role="button" class="btn btn-primary">前往了解</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </template>
+    
+    <!-- 版權 nav -->
+    <footer id="s12" class="container d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+
+		<div class="d-flex align-items-center">
+			<a href="javascript:;" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+				<img src="./images/VVJVJIDMCPSU1513896602867.avif" alt="" height="40px" class="bg-light rounded-1">
+			</a>
+			<span class="text-muted"> Copyright &copy; Champion Chen All Rights Reserved. Designed by Champion Chen.</span>
+		</div>
+
+		<div class="d-flex">
+			<a href="javascript:;" class="text-decoration-none d-block px-1 wow animate__rotateIn" data-wow-duration="1s" data-wow-delay="0s" data-wow-iteration="1">
+				<i class="fa-brands fa-square-facebook text-primary fa-2x"></i>
+			</a>
+			<a href="javascript:;" class="text-decoration-none d-block px-1 wow animate__rotateIn" data-wow-duration="1s" data-wow-delay="0.3s" data-wow-iteration="1">
+				<i class="fa-brands fa-square-x-twitter text-secondary fa-2x"></i>
+			</a>
+			<a href="javascript:;" class="text-decoration-none d-block px-1 wow animate__rotateIn" data-wow-duration="1s" data-wow-delay="0.6s" data-wow-iteration="1">
+				<i class="fa-brands fa-line text-success fa-2x"></i>
+			</a>
+			<a href="javascript:;" class="text-decoration-none d-block px-1 wow animate__rotateIn" data-wow-duration="1s" data-wow-delay="0.9s" data-wow-iteration="1">
+				<i class="fa-brands fa-square-instagram text-danger fa-2x"></i>
+			</a>
+		</div>
+	</footer>
+</div>
+</body>
+<script src="./js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/counterup2@2.0.2/dist/index.js">	</script> <!-- counterAnimation -->
+<script src="./js/jquery-3.7.1.js"></script>
+<script src="./js/vue.global.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+<script>
+    const { ref, reactive, watch, onBeforeMount, onMounted, onUpdated, nextTick } = Vue; // 從 Vue 提取屬性以簡化後續寫法。須寫在 App 同層
+    const App = {
+        setup(){
+            // register
+            const username_reg = ref('');
+            const flag_username_reg = ref(false);
+            watch(
+                username_reg, (newValue) => {
+                    if(newValue.length > 7 && newValue.length < 21){
+                        flag_username_reg.value = true; // 符合規定
+                    }else{
+                        flag_username_reg.value = false;
+                    }
+                }
+            );
+            const password_reg = ref('');
+            const flag_password_reg = ref(false);
+            watch(
+                password_reg, (newValue) => {
+                    if(newValue.length > 7 && newValue.length < 21){
+                        // 符合規定
+                        flag_password_reg.value = true;
+                        if(password_reg.value == rePassword_reg.value){
+                            flag_rePassword_reg.value = true;
+                        }else{
+                            flag_rePassword_reg.value = false;
+                        }
+                    }else{
+                        // 不符規定
+                        flag_password_reg.value = false;
+                        flag_rePassword_reg.value = false; // 連動 rePassword_reg
+                    }
+                }
+            );
+            const rePassword_reg = ref('');
+            const flag_rePassword_reg = ref(false);
+            watch(
+				rePassword_reg, (newValue) => {
+					// 先連動確認註冊密碼
+					if(flag_password_reg.value){
+						if(password_reg.value == rePassword_reg.value){
+							flag_rePassword_reg.value = true; // 符合規定
+						}else{
+							flag_rePassword_reg.value = false;
+						}
+					}else{
+						flag_rePassword_reg.value = false;
+					}
+				}
+			);
+            const email_reg = ref('');
+            const flag_email_reg = ref(false);
+            watch(
+                email_reg, (newValue) => {
+                    if(newValue.length > 7 && newValue.length < 31){
+                        flag_email_reg.value = true; // 符合規定
+                    }else{
+                        flag_email_reg.value = false;
+                    }
+                }
+            );
+            const chk_reg_text = ref('不同意');
+            const flag_chk_reg = ref(false);
+            watch(
+                flag_chk_reg, () => {
+                    if(flag_chk_reg){
+                        chk_reg_text.value = '同意';
+                    }else{
+                        chk_reg_text.value = '不同意';
+                    }
+                }
+            );
+            const register = () => {
+                if (flag_username_reg.value && flag_password_reg.value && flag_rePassword_reg.value && flag_email_reg.value && flag_chk_reg.value) {
+                    // Send a POST request
+                    // {"username": "Champion", "password": "5566", "email": "abc@gmail.com"}
+                    var dataJSON = {};
+                    dataJSON["username"] = username_reg.value;
+                    dataJSON["password"] = password_reg.value;
+                    dataJSON["email"] = email_reg.value;
+                    // console.log(JSON.stringify(dataJSON));
+                    axios({
+                        method: 'post',
+                        url: './member_reg_api.php',
+                        data: JSON.stringify(dataJSON),
+                    })
+                    .then((response) => {
+                        // console.log(response);
+                        if(response.data.state){
+                            alert(response.data.message);
+                            $('#Register').modal('hide'); // 用 jQuery 隱藏 RegisterModal
+                            // const a = () => {location.href = './SPA.html'};
+                            // a();
+                        }else{
+                            alert(response.data.message);
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+                } else {
+                    alert("欄位錯誤請修正!");
+                }
+            };
+            
+            // login & logout
+            const username_login = ref('');
+            const flag_username_login = ref(false);
+            watch( username_login, () => {
+                if(username_login.value != ''){
+                    flag_username_login.value = true;
+                }else{
+                    flag_username_login.value = false;
+                }
+            });
+            const password_login = ref('');
+            const flag_password_login = ref(false);
+            watch( password_login, () => {
+                if(password_login.value != ''){
+                    flag_password_login.value = true;
+                }else{
+                    flag_password_login.value = false;
+                }
+            });
+            const user_login_data = reactive({ content: [] });
+            const setCookie = (cname, cvalue, exdays) => {
+                const d = new Date();
+                d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000)); // exdays 為效期，輸入天數，函數轉毫秒
+                let expires = "expires="+d.toUTCString();
+                document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+            };
+            const getCookie = (cname) => {
+                let name = cname + "=";
+                let ca = document.cookie.split(';');
+                for(let i = 0; i < ca.length; i++) {
+                    let c = ca[i];
+                    while (c.charAt(0) == ' ') {
+                        c = c.substring(1);
+                    }
+                    if (c.indexOf(name) == 0) {
+                        return c.substring(name.length, c.length);
+                    }
+                }
+                return "";
+            };
+            const checkCookie = () => {
+                let user = getCookie("username");
+                if (user != "") {
+                    alert("Welcome again " + user);
+                } else {
+                    user = prompt("Please enter your name:", "");
+                    if (user != "" && user != null) {
+                        setCookie("username", user, 365);
+                    }
+                }
+            };
+            const login = () => {
+                if (flag_username_login && flag_password_login) {
+                    // Send a POST request
+                    // {"username": "Champion", "password": "5566"}
+                    var dataJSON = {};
+                    dataJSON["username"] = username_login.value;
+                    dataJSON["password"] = password_login.value;
+                    // console.log(JSON.stringify(dataJSON));
+                    axios({
+                        method: 'post',
+                        url: './member_login_api.php',
+                        data: JSON.stringify(dataJSON),
+                    })
+                    .then((response) => {
+                        // console.log(response);
+                        if(response.data.state){
+                            alert(response.data.message);
+                            // location.href = './SPA.html';
+                            // console.log(response.data.data.Uid01);
+                            setCookie("Uid01", response.data.data.Uid01, 7); // 將金鑰存入 cookie 7天
+                            user_login_data.content = response.data.data; // 用變數儲存，於畫面任意處引用
+                            $('#login').modal('hide'); // 用 jQuery 隱藏 LoginModal
+                        }else{
+                            alert(response.data.message);
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+                } else {
+                    alert('帳密不得為空');
+                }
+            };
+            // 載入頁面時檢查有無 cookie 並送出，將查詢結果用變數記下來
+            if(getCookie('Uid01')){
+                // 傳到後端做驗證
+                var dataJSON = {};
+                dataJSON["uid01"] = getCookie('Uid01');
+                // console.log(JSON.stringify(dataJSON));
+
+                axios({
+                    method: 'post',
+                    url: './member_check_api.php',
+                    data: JSON.stringify(dataJSON),
+                })
+                .then((response) => {
+                    // console.log(response);
+
+                    // 設條件判斷，避免查無變 undefined
+                    if(response.data.state){
+                        user_login_data.content = response.data.data; // 有則紀錄
+                        // console.log(user_login_data.content)
+                    }else{
+                        user_login_data.content = []; // 無則為空
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            } else {
+                alert('請登入會員！'); // 練習用，一般不做任何動作
+            };
+            const logout = () => {
+                if(confirm('確認要登出嗎？') == 1){
+                    user_login_data.content = [];
+                    setCookie('Uid01', '', 0); // 直接呼叫函式將期限設為 0，消除 cookie
+                    // document.cookie = "Uid01=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; // 官網的方法，將時間設為過去，一樣過期
+                    // location.href = 'SPA.html';
+                }
+            };
+            
+            // counterUp 放函式，於生命週期鉤子呼叫
+            const bindCounterUp = () => {
+                const counterUp = window.counterUp.default
+                const callback = entries => {
+                    entries.forEach( entry => {
+                        const el = entry.target
+                        if ( entry.isIntersecting && ! el.classList.contains( 'is-visible' ) ) {
+                            // 開始計數動畫
+                            counterUp( el, {
+                                duration: 2000,
+                                delay: 16,
+                            } )
+                            el.classList.add( 'is-visible' )
+                        }
+                    } )
+                };
+                const IO = new IntersectionObserver( callback, { threshold: 1 } )
+                // 用不同名稱，讓不同目標可以跑數字跳動
+                const el_1 = document.querySelector( '.counter_01' )
+                const el_2 = document.querySelector( '.counter_02' )
+                const el_3 = document.querySelector( '.counter_03' )
+                // 確保元素存在再開始觀察
+                if (el_1) IO.observe( el_1 )
+                if (el_2) IO.observe( el_2 )
+                if (el_3) IO.observe( el_3 )
+            };
+
+            // 鼠標事件監控也放函式，於生命週期鉤子呼叫
+            const bindMouseMoveEvents = () => {
+                // // 原始的純鼠標事件寫法
+                // card.addEventListener('mousemove', (e) => {
+                //     const rect = card.getBoundingClientRect();
+                //     const x = e.clientX - rect.left; // 鼠標相對卡片左上角的 x 坐標
+                //     const y = e.clientY - rect.top;  // 鼠標相對卡片左上角的 y 坐標
+
+                //     const centerX = rect.width / 2;
+                //     const centerY = rect.height / 2;
+
+                //     // 根據距離中心點的偏移量計算旋轉角度
+                //     const rotateX = ((y - centerY) / centerY) * 30; // 控制上下翻轉（y軸影響 x 旋轉）
+                //     const rotateY = ((centerX - x) / centerX) * 30; // 控制左右翻轉（x軸影響 y 旋轉）
+
+                //     // 設置卡片的旋轉效果
+                //     card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.3, 1.3, 1.05)`;
+                // });
+                // // 當鼠標移出時重置卡片
+                // card.addEventListener('mouseleave', () => {
+                //     card.style.transform = 'rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+                // });
+                
+                // 1. 處理 .cards 的旋轉效果
+                const cards = document.querySelectorAll('.cards');
+                cards.forEach(card => {
+                    card.addEventListener('mousemove', (e) => handleCardMovement(e, card)); // 鼠標移動
+                    card.addEventListener('touchmove', (e) => handleCardMovement(e, card)); // 觸控移動
+                    card.addEventListener('mouseleave', () => resetCard(card)); // 鼠標移出時重置
+                    card.addEventListener('touchend', () => resetCard(card)); // 觸控結束時重置
+                });
+
+                // 處理 .cards 的旋轉效果邏輯
+                let handleCardMovement = (e, card) => {
+                    const rect = card.getBoundingClientRect();
+                    let x, y;
+
+                    // 根據事件類型來獲取鼠標或觸控點的位置
+                    if (e.type === 'mousemove') {
+                        x = e.clientX - rect.left;
+                        y = e.clientY - rect.top;
+                    } else if (e.type === 'touchmove') {
+                        const touch = e.touches[0];  // 觸控設備可能有多個觸控點，這裡取第一個觸控點
+                        x = touch.clientX - rect.left;
+                        y = touch.clientY - rect.top;
+                    }
+
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+
+                    // 根據距離中心點的偏移量計算旋轉角度
+                    const rotateX = ((y - centerY) / centerY) * 30;  // 控制上下翻轉（y軸影響 x 旋轉）
+                    const rotateY = ((centerX - x) / centerX) * 30;  // 控制左右翻轉（x軸影響 y 旋轉）
+
+                    // 設置卡片的旋轉效果
+                    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.3, 1.3, 1.05)`;
+
+                    // 阻止觸控滾動
+                    e.preventDefault();
+                }
+
+                // 重置 .cards 旋轉效果
+                let resetCard = (card) => {
+                    card.style.transform = 'rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+                }
+
+                // 2. 處理 .deck-container 的拖動效果
+                const container = document.querySelector('.deck-container');
+                let isMouseDown = false;
+                let startX;
+                let startY;
+                let scrollLeft;
+                let scrollTop;
+
+                // 處理容器拖動的邏輯
+                container.addEventListener('mousedown', handleContainerMovement);
+                container.addEventListener('mousemove', handleContainerMovement);
+                container.addEventListener('mouseup', handleContainerMovement);
+                container.addEventListener('mouseleave', handleContainerMovement);
+
+                container.addEventListener('touchstart', handleContainerMovement);
+                container.addEventListener('touchmove', handleContainerMovement);
+                container.addEventListener('touchend', handleContainerMovement);
+                container.addEventListener('touchcancel', handleContainerMovement);
+
+                // 處理 .deck-container 拖動的邏輯
+                function handleContainerMovement(e) {
+                    const event = e.type === 'touchstart' || e.type === 'touchmove' || e.type === 'touchend' ? e.touches[0] : e;
+
+                    if (e.type === 'mousedown' || e.type === 'touchstart') {
+                        isMouseDown = true;
+                        startX = event.pageX - container.offsetLeft;
+                        startY = event.pageY - container.offsetTop;
+                        scrollLeft = container.scrollLeft;
+                        scrollTop = container.scrollTop;
+                        container.style.cursor = 'grabbing'; // 改變游標樣式
+                        e.preventDefault();
+                    }
+
+                    if (e.type === 'mousemove' || e.type === 'touchmove') {
+                        if (!isMouseDown) return;
+
+                        const x = event.pageX - container.offsetLeft;
+                        const y = event.pageY - container.offsetTop;
+                        const walkX = (x - startX) * 2;
+                        const walkY = (y - startY) * 2;
+
+                        container.scrollLeft = scrollLeft - walkX;
+                        container.scrollTop = scrollTop - walkY;
+                        e.preventDefault();
+                    }
+
+                    if (e.type === 'mouseup' || e.type === 'touchend' || e.type === 'mouseleave' || e.type === 'touchcancel') {
+                        isMouseDown = false;
+                        container.style.cursor = 'grab'; // 恢復游標樣式
+                    }
+                }
+            };
+
+            // 於生命週期鉤子呼叫
+            onMounted(() => {
+                // 使用 nextTick 確保事件綁定在 DOM 更新完成後執行，避免錯過最新的渲染結果
+                nextTick(() => {
+                    if (user_login_data.content.Level >= 0) {
+                        bindCounterUp();
+                        bindMouseMoveEvents();
+                    }  
+                })
+            });
+            onUpdated(()=> {
+                nextTick(() => {
+                    if (user_login_data.content.Level >= 0) {
+                        bindCounterUp();
+                        bindMouseMoveEvents();
+                    }
+                })
+            });
+
+            return{
+                // register
+                username_reg, flag_username_reg,
+                password_reg, flag_password_reg,
+                rePassword_reg, flag_rePassword_reg,
+                email_reg, flag_email_reg,
+                chk_reg_text, flag_chk_reg,
+                register,
+                // login
+                username_login, flag_username_login,
+                password_login, flag_password_login,
+                setCookie, getCookie, checkCookie,
+                user_login_data, login, logout,
+            };
+        }
+    }
+	Vue.createApp(App).mount('#app')
+</script>
+
+</html>
